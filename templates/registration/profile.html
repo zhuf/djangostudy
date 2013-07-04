@@ -1,0 +1,16 @@
+
+<p>hello , {{ request.user.get_full_name }}</p>
+<a href="/lists">back</a>
+
+
+<form method="post">
+	{% csrf_token %}
+
+username: <input type="text" name="username" value="{{request.user.username}}">
+name: <input type="text" name="name" value="{{request.user.get_full_name}}">
+
+<input type="password" name="password">
+<input type="password" name="confirm_password">
+
+<input type="submit">
+</form>

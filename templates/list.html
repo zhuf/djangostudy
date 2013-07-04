@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>test images</title>
+</head>
+<body>
+	<h1>welcome, <a href="/accounts/profile/">{{ request.user.get_full_name }}</a></h1>
+
+{% if request.user.is_staff %}
+<div>
+	<h1>Upload Image</h1>
+    <form action="/upload/" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+        {% csrf_token %}
+        <input type="text" name="name" value="">
+        <input type="file" name="head" value="" >
+        <button>Submit</button>
+    </form>
+</div>
+
+<div>
+    <h1>Upload File</h1>
+    <form action="/uploadfile/" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+        {% csrf_token %}
+        <input type="text" name="ff" value="">
+        <input type="file" name="fi" value="" >
+        <button>Submit</button>
+    </form>
+</div>
+{% else %}
+	<p>normal</p>
+{% endif %}
+    <a href="/accounts/logout">logout</a><br>
+<div>
+{% for i in stus %}
+{{ i.name }}<br>
+{% if i.head %}
+<img id="{{ i.id }}" src="{{ i.head.url }}" style="width:200px; height: 160px;">
+{% else %}
+<p>none</p>
+{% endif %}
+<hr>
+{% endfor %}
+</div>
+file
+<div>
+{% for i in fis %}
+{{ i.ff }}<br>{{ i.fi.url }}
+<hr>
+{% endfor %}
+</div>
+</body>
+</html>
