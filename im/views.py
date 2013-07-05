@@ -18,6 +18,8 @@ from django.utils.http import base36_to_int, is_safe_url
 
 from django.template import RequestContext 
 
+from django.contrib import messages
+
 import csv
 
 from im.models import Stu, Fi
@@ -106,15 +108,25 @@ def profile_view(request):
 		errors = []
 		user = User.objects.get(username=username)
 
+		used_name = user.first_name
+
 		password = request.POST.get('password', '')
 		confirm_password = request.POST.get('confirm_password', '')
 
-		if password != '' and password == confirm_password:
-			user.set_password(password)
+		if used_name != name:
+			user.first_name = name
+			user.save()
+			messages.success(request, 'Profile details updated.')
 
-		user.first_name = name
-		user.save()
-		
+		if password != '' and password == confirm_password:
+			messages.success(request, 'password updated.')
+			user.set_password(password)
+			user.save()
+		elif password != confirm_password:
+			messages.error(request, 'password error.')
+		else:
+			pass
+	
 		return HttpResponseRedirect('/accounts/profile/')
 	return render_to_response('profile.html', {'request': request}, context_instance=RequestContext(request))
 

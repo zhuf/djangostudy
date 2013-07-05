@@ -2,6 +2,13 @@
 <p>hello , {{ request.user.get_full_name }}</p>
 <a href="/lists">back</a>
 
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 
 <form method="post">
 	{% csrf_token %}
