@@ -11,3 +11,5 @@ class FiAdmin(reversion.VersionAdmin):
 
 admin.site.register(Stu, StuAdmin)
 admin.site.register(Fi, FiAdmin)
+
+reversion.register(Stu)
