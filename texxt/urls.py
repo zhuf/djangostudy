@@ -28,5 +28,6 @@ urlpatterns = patterns('',
     url(r'^upload/', upload),
     url(r'^uploadfile/', upload_file),
     url(r'^generate_csv/', generate_csv),
+    url(r'^display/', display_meta),
 
 )
