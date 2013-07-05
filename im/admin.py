@@ -9,8 +9,5 @@ class StuAdmin(admin.ModelAdmin):
 class FiAdmin(reversion.VersionAdmin):
 	pass
 
-class UserAdmin(reversion.VersionAdmin):
-	pass
-
 admin.site.register(Stu, StuAdmin)
 admin.site.register(Fi, FiAdmin)
