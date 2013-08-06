@@ -16,23 +16,14 @@
         <button>Submit</button>
     </form>
 </div>
-
-<div>
-    <h1>Upload File</h1>
-    <form action="/uploadfile/" method="post" enctype="multipart/form-data" accept-charset="utf-8">
-        {% csrf_token %}
-        <input type="text" name="ff" value="">
-        <input type="file" name="fi" value="" >
-        <button>Submit</button>
-    </form>
-</div>
-{% else %}
-	<p>normal</p>
 {% endif %}
+
     <a href="/accounts/logout">logout</a><br>
+<hr>
 <div>
+
 {% for i in stus %}
-{{ i.name }}<br>
+<a href="/single/{{i.id}}">{{ i.name }}</a><br>
 {% if i.head %}
 <img id="{{ i.id }}" src="{{ i.head.url }}" style="width:200px; height: 160px;">
 {% else %}
@@ -42,11 +33,6 @@
 {% endfor %}
 </div>
 file
-<div>
-{% for i in fis %}
-{{ i.ff }}<br>{{ i.fi.url }}
-<hr>
-{% endfor %}
-</div>
+
 </body>
 </html>

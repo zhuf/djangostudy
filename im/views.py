@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 
 from django.conf import settings
@@ -19,16 +19,16 @@ from django.utils.http import base36_to_int, is_safe_url
 from django.template import RequestContext 
 
 from django.contrib import messages
+import reversion
 
 import csv
 
-from im.models import Stu, Fi
-from im.forms import StuForm, FiForm, AuthenticationForm
+from im.models import Stu
+from im.forms import StuForm,  AuthenticationForm
 
 @login_required
 def lists(request):
 	stus = Stu.objects.all().order_by('-id')
-	fis = Fi.objects.all().order_by('-id')
 
 	return render_to_response('list.html', locals())
 
@@ -42,13 +42,19 @@ def upload(request):
 	return HttpResponseForbidden('allowed only via POST')
 
 @csrf_exempt
-def upload_file(request):
+def edit(request, id=''):
+	stu = get_object_or_404(Stu, pk=int(id))
 	if request.method == 'POST':
-		form = FiForm(request.POST, request.FILES)
+		form = StuForm(request.POST, request.FILES, instance=stu)
 		if form.is_valid():
 			form.save()
 			return HttpResponseRedirect('/lists')
-	return HttpResponseForbidden('allowed only via POST')
+	return HttpResponseForbidden('allowed only via POST' + stu.name)
+
+@login_required
+def single(request, id=''):
+	stu = Stu.objects.get(id=int(id))
+	return render_to_response('single.html', locals())
 
 @sensitive_post_parameters()
 @csrf_protect

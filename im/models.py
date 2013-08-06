@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 from django.db import models
 
 class Stu(models.Model):
@@ -13,15 +15,28 @@ class Stu(models.Model):
 	def __unicode__(self):
 		return self.name
 
-class Fi(models.Model):
-	ff = models.CharField(max_length=100)
-	fi = models.FileField(upload_to='file', null=True, blank=True)
 
-	def delete(self, *args, **kwargs):
-		storage, path = self.fi.storage, self.fi.path
+class Product(models.Model):
+	STATE_CHOICES = (
+		('DEV', u'开发测试'),
+		('TEST', u'前期测试'),
+		('ONLINE', u'已上线'),
+		('OFFLINE', u'下线')
+		)
 
-		super(Fi, self).delete(*args, **kwargs)
-		storage.delete(path)
+	product_name = models.CharField(u'产品名', max_length=255, blank=True)
+	product_owner = models.CharField(u'产品负责人', max_length=255, blank=True)
+	first_dep = models.CharField(u'一级部门', max_length=255, blank=True)
+	sec_dep = models.CharField(u'二级部门', max_length=255, blank=True)
+	productURL = models.CharField(u'产品服务URL', max_length=255, blank=True)
+	onlinetime = models.DateTimeField(u'上线时间', blank=True)
+	state = models.CharField(u'状态', max_length=255, choices=STATE_CHOICES, blank=True)
+	#cost = models.CharField(u'成本', max_length=20, blank=True)
+	offlinetime = models.DateTimeField(u'下线时间', blank=True)
+	description = models.CharField(u'描述', max_length=512, blank=True)
 
 	def __unicode__(self):
-		return self.ff
+		return self.product_name
+	
+	class Meta:
+		verbose_name = u'产品'

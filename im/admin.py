@@ -1,15 +1,15 @@
 from django.contrib import admin
-from im.models import Stu, Fi
+from im.models import Stu, Product
 
 import reversion
 
 class StuAdmin(admin.ModelAdmin):
 	list_display = ('name', )
 
-class FiAdmin(reversion.VersionAdmin):
+class ProductAdmin(reversion.VersionAdmin):
 	pass
 
 admin.site.register(Stu, StuAdmin)
-admin.site.register(Fi, FiAdmin)
+admin.site.register(Product, ProductAdmin)
 
 reversion.register(Stu)

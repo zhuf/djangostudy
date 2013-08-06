@@ -1,5 +1,5 @@
 from django import forms
-from im.models import Stu, Fi
+from im.models import Stu
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -9,10 +9,8 @@ class StuForm(forms.ModelForm):
 
 	class Meta:
 		model = Stu
+		include = ['head']
 
-class FiForm(forms.ModelForm):
-	class Meta:
-		model = Fi
 
 class AuthenticationForm(forms.Form):
 	"""
